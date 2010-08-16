@@ -1,2 +1,51 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+[
+  #flight
+  :flight_1 => {
+    'origin_airport' => { 'iata_code' => 'MSN' },
+    'destination_airport' => { 'iata_code' => 'JFK' },
+    'date' => '2010-08-10',
+    'airline' => { 'iata_code' => 'AA' },
+    'emplanements_per_trip' => 1,
+    'seat_class' => { 'name' => 'economy' },
+    'url' => 'http://carbon.brighterplanet.com/flights?origin_airport[iata_code]=msn&destination_airport[iata_code]=jfk&date=2010-08-10&airline[iata_code]=AA&emplanements_per_trip=1&seat_class[name]=economy' 
+  },
+
+  :flight_2 => {
+    'origin_airport' => { 'iata_code' => 'IAD' },
+    'destination_airport' => { 'iata_code' => 'CDG' },
+    'date' => '2010-07-18',
+    'airline' => { 'iata_code' => 'AF' },
+    'seat_class' => { 'name' => 'first' },
+    'url' => 'http://carbon.brighterplanet.com/flights?origin_airport[iata_code]=IAD&destination_airport[iata_code]=CDG&date=2010-07-18&airline[iata_code]=AF&emplanements_per_trip=2&seat_class[name]=first' 
+  },
+
+  :rail_trip => {
+    'rail_class' => { 'name' => 'intercity rail' },
+    'distance_estimate' => 428.3,
+    'url' => 'http://carbon.brighterplanet.com/rail_trips?rail_class[name]=intercity rail&distance_estimate=428.3'
+  },
+
+  :fuel_purchase => {
+    'zip_code' => { 'name' => '48915' },
+    'fuel_type' => { 'name' => 'Reformulated Motor Gasoline' },
+    'cost' => 28.31,
+    'url' => 'http://carbon.brighterplanet.com/fuel_purchases?zip_code[name]=48915&fuel_type[name]=Reformulated Motor Gasoline&cost=28.31'
+  },
+
+  :purchase_1 => {
+    'date' => '2010-06-23',
+    'merchant' => { 'name' => 'Staples' },
+    'merchant_category' => { 'mcc' => '5111' },
+    'cost' => 74.80,
+    'purchase_amount' => 85.22,
+    'url' => 'http://carbon.brighterplanet.com/purchases?date2010-06-23&merchant[name]=Staples&merchant_category[mcc]=5111&cost=74.80&purchase_amount=85.22'
+  },
+
+  :purchase_2 => {
+    'date' => '2010-08-06',
+    'merchant' => { 'name' => 'Hilton' },
+    'merchant_category' => { 'mcc' => '3504' },
+    'purchase_amount' => 374.13,
+    'url' => 'http://carbon.brighterplanet.com/purchases?date=2010-08-06&merchant[name]=Hilton&merchant_category[mcc]=3504&purchase_amount=374.13'
+  }
+]
