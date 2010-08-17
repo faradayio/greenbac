@@ -106,7 +106,7 @@ document.observe('dom:loaded', function() {
 
 function showEstimate(purchase, url) {
   purchase.down('a').hide();
-  var iframe = new Element('iframe', { 'src': url });
+  var iframe = new Element('iframe', { 'src': url, 'allowtransparency': 'true', 'style': 'background: transparent;', 'frameborder': '0', 'scrolling': 'no' });
   purchase.insert({ 'top': iframe });
   var methodology = new Element('p');
   var methodologyLink = new Element('a', { 'href': url.gsub('.txt', '') }).update('Methodology');

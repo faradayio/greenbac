@@ -187,6 +187,8 @@ pre, kbd {
   width: 300px;
   margin: -8px 0 0;
   height: 23px;
+  background: transparent;
+  overflow: hidden;
 }
 
 .bill ol li>p {
