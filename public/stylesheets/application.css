@@ -92,8 +92,8 @@ pre, kbd {
   -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
   -webkit-box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
   box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
-  width: 700px;
   padding: 15px;
+  margin: 0 300px 0 0;
 }
 
 .bill ol {
@@ -121,16 +121,16 @@ pre, kbd {
 }
 
 .bill ol li dl dd {
-  float: left;
 }
 
 .bill ol li dl dd.date {
+  float: left;
   width: 100px;
 }
 
 .bill ol li dl dd.description {
-  width: 500px;
   text-transform: uppercase;
+  margin: 0 100px;
 }
 
 .bill ol li dl dd.description h3 {
@@ -143,12 +143,13 @@ pre, kbd {
 }
 
 .bill ol li dl dd.amount {
+  float: right;
   width: 100px;
 }
 
 .bill ol li>a {
   position: absolute;
-  left: 760px;
+  right: 260px;
   background: #778276;
   width: 20px;
   display: block;
@@ -165,6 +166,7 @@ pre, kbd {
 
 .bill ol li>a:hover {
   width: 80px;
+  right: 200px;
 }
 
 .bill ol li>a:hover span {
@@ -173,7 +175,7 @@ pre, kbd {
 
 .bill ol li>iframe {
   position: absolute;
-  left: 760px;
+  right: 0;
   border: none;
-  width: 250px;
+  width: 300px;
 }
