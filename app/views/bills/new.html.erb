@@ -92,6 +92,8 @@
 </div>
 
 <script type="text/javascript">
+var timer;
+
 document.observe('dom:loaded', function() {
   $$('.bill ol li').each(function(purchase) {
     var url = purchase.down('dd.url').innerHTML.unescapeHTML();
@@ -106,12 +108,20 @@ document.observe('dom:loaded', function() {
 
 function showEstimate(purchase, url) {
   purchase.down('a').hide();
-  var iframe = new Element('iframe', { 'src': url, 'allowtransparency': 'true', 'style': 'background: transparent;', 'frameborder': '0', 'scrolling': 'no' });
+  timer = new Date().getTime();
+  var iframe = new Element('iframe', { 'src': url, 'allowtransparency': 'true', 'style': 'background: transparent;', 'frameborder': '0', 'scrolling': 'no', 'onload': 'stopTimer(this);' });
   purchase.insert({ 'top': iframe });
   var methodology = new Element('p');
   var methodologyLink = new Element('a', { 'href': url.gsub('.txt', '') }).update('Methodology');
+  var methodologySpan = new Element('span');
+  methodology.insert({ 'bottom': methodologySpan });
   methodology.insert({ 'bottom': methodologyLink });
   purchase.insert({ 'top': methodology });
-  
+}
+
+function stopTimer(iframe) {
+  var end = new Date().getTime();
+  var seconds = (end - timer) / 1000;
+  iframe.up('li').down('p span').update('Calculated remotely in ' + seconds + ' seconds. ');
 }
 </script>
