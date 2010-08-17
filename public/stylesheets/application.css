@@ -203,7 +203,7 @@ pre, kbd {
 
 .bill ol li>p a {
   text-decoration: none;
-  color: blue;
+  color: gray;
 }
 
 .bill ol li>p a:hover {
