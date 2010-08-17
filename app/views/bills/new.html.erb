@@ -1,0 +1,100 @@
+<div id="header">
+  <h1>Greenbac</h1>
+  <p>What if you could learn your carbon footprint just by looking at your bank statement?</p>
+</div>
+<div class="bill">
+  <h2>Monthly statement for <span class="name">Jack Greenbac</span></h2>
+  <p class="timeframe">1 July 2010 &ndash; 1 August 2010</p>
+  <ol>
+    <li>
+      <dl>
+        <dt>Date</dt>
+        <dd class="date">7/7/2010</dd>
+        <dt>Description</dt>
+        <dd class="description">
+          <h3>American Airlines</h3>
+          <p>7/20/2010 MSN&ndash;JFK R/T AA0123 Economy</p>
+        </dd>
+        <dt>Amount</dt>
+        <dd class="amount">$473.13</dd>
+        <dt>Estimate URL</dt>
+        <dd class="url">http://carbon.brighterplanet.com/flights.txt?origin_airport[iata_code]=msn&amp;destination_airport[iata_code]=jfk&amp;date=2010-08-10&amp;airline[iata_code]=AA&amp;emplanements_per_trip=1&amp;seat_class[name]=economy</dd>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>Date</dt>
+        <dd class="date">7/11/2010</dd>
+        <dt>Description</dt>
+        <dd class="description">
+          <h3>Amtrak</h3>
+          <p>7/22/2010 NYP&ndash;PHL</p>
+        </dd>
+        <dt>Amount</dt>
+        <dd class="amount">$129.97</dd>
+        <dt>Estimate URL</dt>
+        <dd class="url">http://carbon.brighterplanet.com/rail_trips.txt?rail_class[name]=intercity rail&amp;distance_estimate=428.3</dd>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>Date</dt>
+        <dd class="date">7/19/2010</dd>
+        <dt>Description</dt>
+        <dd class="description">
+          <h3>Exxon-Mobil</h3>
+          <p>Gasoline 11.9 gallons</p>
+        </dd>
+        <dt>Amount</dt>
+        <dd class="amount">$33.75</dd>
+        <dt>Estimate URL</dt>
+        <dd class="url">http://carbon.brighterplanet.com/fuel_purchases.txt?zip_code[name]=48915&amp;fuel_type[name]=Reformulated+Motor+Gasoline&amp;cost=28.31</dd>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>Date</dt>
+        <dd class="date">7/23/2010</dd>
+        <dt>Description</dt>
+        <dd class="description">Staples</dd>
+        <dt>Amount</dt>
+        <dd class="amount">$85.22</dd>
+        <dt>Estimate URL</dt>
+        <dd class="url">http://carbon.brighterplanet.com/purchases.txt?date2010-06-23&amp;merchant[name]=Staples&amp;merchant_category[mcc]=5111&amp;cost=74.80&amp;purchase_amount=85.22</dd>
+      </dl>
+    </li>
+    <li>
+      <dl>
+        <dt>Date</dt>
+        <dd class="date">7/27/2010</dd>
+        <dt>Description</dt>
+        <dd class="description">Hilton</dd>
+        <dt>Amount</dt>
+        <dd class="amount">$374.13</dd>
+        <dt>Estimate URL</dt>
+        <dd class="url">http://carbon.brighterplanet.com/purchases.txt?date=2010-08-06&amp;merchant[name]=Hilton&amp;merchant_category[mcc]=3504&amp;purchase_amount=374.13</dd>
+      </dl>
+    </li>
+  </ol>
+</div>
+
+<script type="text/javascript">
+document.observe('dom:loaded', function() {
+  $$('.bill ol li').each(function(purchase) {
+    var url = purchase.down('dd.url').innerHTML.unescapeHTML();
+    var link = new Element('a', { 'href': url }).update('<span>Calculate </span>CO₂');
+    link.observe('click', function(ev) {
+      ev.stop();
+      showEstimate(purchase, link.getAttribute('href'));
+    })
+    purchase.insert({ 'top': link}); 
+  });
+});
+
+function showEstimate(purchase, url) {
+  var iframe = new Element('iframe', { 'src': url });
+  purchase.down('a').hide();
+  purchase.insert({ 'top': iframe });
+  
+}
+</script>
