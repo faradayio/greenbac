@@ -178,4 +178,25 @@ pre, kbd {
   right: 0;
   border: none;
   width: 300px;
+  margin: -8px 0 0;
+  height: 23px;
+}
+
+.bill ol li>p {
+  position: absolute;
+  right: 0;
+  border: none;
+  width: 290px;
+  margin: 15px 0 0;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.bill ol li>p a {
+  text-decoration: none;
+  color: blue;
+}
+
+.bill ol li>p a:hover {
+  text-decoration: underline;
 }

@@ -92,9 +92,13 @@ document.observe('dom:loaded', function() {
 });
 
 function showEstimate(purchase, url) {
-  var iframe = new Element('iframe', { 'src': url });
   purchase.down('a').hide();
+  var iframe = new Element('iframe', { 'src': url });
   purchase.insert({ 'top': iframe });
+  var methodology = new Element('p');
+  var methodologyLink = new Element('a', { 'href': url.gsub('.txt', '') }).update('Methodology');
+  methodology.insert({ 'bottom': methodologyLink });
+  purchase.insert({ 'top': methodology });
   
 }
 </script>
