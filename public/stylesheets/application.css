@@ -224,6 +224,11 @@ pre, kbd {
   float: right;
   width: 255px;
   margin: 0 15px;
+  color: #b1c3a9;
+}
+
+#footer #kudos a {
+  color: #ccdfc5;
 }
 
 #footer>p {
