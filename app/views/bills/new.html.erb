@@ -9,8 +9,8 @@
       airline: 'DL',
       trips: 2,
       seat_class: 'economy',
-      date: '2010-08-10',
-      timeframe: '2010-01-01-2010/12-31' 
+      // date: '2010-08-10',
+      // timeframe: '2010-01-01-2010/12-31' 
     },
     meeting: {
       zip_code: 20001,
@@ -78,7 +78,7 @@
           <dd class="url"></dd>
         </dl>
       </li>
-      <li id="fuelPurchase">
+      <li id="fuel_purchase">
         <dl>
           <dt>Date</dt>
           <dd class="date">7/19/2010</dd>
@@ -164,21 +164,22 @@
     purchase.down('a').hide();
     timer = new Date().getTime();
 
-    var pre = new Element('pre');
-    pre.appendChild(document.createTextNode(impacts.carbon));
-    purchase.insert({ 'top': pre });
-
     var methodology = new Element('p');
     var methodologyLink = new Element('a', { 'href': impacts.methodology }).update('Methodology');
     var methodologySpan = new Element('span');
     methodology.insert({ 'bottom': methodologySpan });
     methodology.insert({ 'bottom': methodologyLink });
     purchase.insert({ 'top': methodology });
+    stopTimer(purchase);
+
+    var pre = new Element('pre');
+    pre.appendChild(document.createTextNode(impacts.carbon));
+    purchase.insert({ 'top': pre });
   }
 
-  function stopTimer(iframe) {
+  function stopTimer(li) {
     var end = new Date().getTime();
     var seconds = (end - timer) / 1000;
-    iframe.up('li').down('p span').update('Calculated remotely in ' + seconds + ' seconds. ');
+    li.down('p span').update('Calculated remotely in ' + seconds + ' seconds. ');
   }
 </script>
