@@ -149,6 +149,7 @@
       link.observe('click', function(ev) {
         ev.stop();
         var name = purchase.getAttribute('id');
+        timer = new Date().getTime();
         CM1.impacts(name, Calculations[name], function(err, impacts) {
           if(err && console)
             consoloe.log('Failed to retrieve impacts for',name,err);
@@ -162,7 +163,6 @@
 
   function showEstimate(purchase, impacts) {
     purchase.down('a').hide();
-    timer = new Date().getTime();
 
     var methodology = new Element('p');
     var methodologyLink = new Element('a', { 'href': impacts.methodology }).update('Methodology');
