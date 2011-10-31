@@ -180,7 +180,7 @@ pre, kbd {
   display: inline;
 }
 
-.bill ol li>iframe {
+.bill ol li>pre {
   position: absolute;
   right: 0;
   border: none;

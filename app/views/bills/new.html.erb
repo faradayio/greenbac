@@ -1,3 +1,44 @@
+<script type="text/javascript" src="javascripts/CM1.js"></script>
+<script type="text/javascript">
+  var CM1 = require('./lib/CM1');
+
+  var Calculations = {
+    flight: {
+      origin_airport: 'ORD',
+      destination_airport: 'LGA',
+      airline: 'DL',
+      trips: 2,
+      seat_class: 'economy',
+      date: '2010-08-10',
+      timeframe: '2010-01-01-2010/12-31' 
+    },
+    meeting: {
+      zip_code: 20001,
+      area: 446,
+      duration: 10
+    },
+    fuel_purchase: {
+      zip_code: 48915,
+      fuel_type: 'Reformulated Motor Gasoline',
+      cost: '33.75'
+    },
+    purchase: {
+      date: '2010-07-23',
+      merchant: 'Staples',
+      merchant_category: 5111,
+      purchase_amount: '85.22',
+      tax: '7.75',
+      timeframe: '2010-01-01-2010/12-31' 
+    },
+    lodging: {
+      lodging_class: 'Hotel',
+      zip_code: 94102,
+      rooms: 1,
+      nights: 2
+    }
+  };
+</script>
+
 <div id="header">
   <h1>Greenback</h1>
   <p>What if you could learn your carbon footprint just by looking at your bank statement?</p>
@@ -7,7 +48,7 @@
     <h2>Monthly statement for Acme Systems, Inc.</h2>
     <p class="timeframe">1 July 2010 &ndash; 1 August 2010</p>
     <ol>
-      <li>
+      <li id="flight">
         <dl>
           <dt>Date</dt>
           <dd class="date">7/7/2010</dd>
@@ -19,10 +60,10 @@
             <p>7/20/2010 ORD&ndash;LGA R/T DL0123 Economy</p>
           </dd>
           <dt>Estimate URL</dt>
-          <dd class="url">http://carbon.brighterplanet.com/flights.txt?origin_airport[iata_code]=ord&amp;destination_airport[iata_code]=lga&amp;airline[iata_code]=DL&amp;trips=2&amp;emplanements_per_trip=1&amp;seat_class[name]=economy&amp;date=2010-08-10&amp;timeframe=2010-01-01/2010-12-31</dd>
+          <dd class="url"></dd>
         </dl>
       </li>
-      <li>
+      <li id="meeting">
         <dl>
           <dt>Date</dt>
           <dd class="date">7/11/2010</dd>
@@ -34,10 +75,10 @@
             <p>Rm 143ABC 4800 Sqft 10 hrs</p>
           </dd>
           <dt>Estimate URL</dt>
-          <dd class="url">http://carbon.brighterplanet.com/meetings.txt?zip_code[name]=20001&amp;area=446&amp;duration=10</dd>
+          <dd class="url"></dd>
         </dl>
       </li>
-      <li>
+      <li id="fuelPurchase">
         <dl>
           <dt>Date</dt>
           <dd class="date">7/19/2010</dd>
@@ -49,10 +90,10 @@
             <p>Gasoline 11.9 gallons</p>
           </dd>
           <dt>Estimate URL</dt>
-          <dd class="url">http://carbon.brighterplanet.com/fuel_purchases.txt?zip_code[name]=48915&amp;fuel_type[name]=Reformulated+Motor+Gasoline&amp;cost=33.75</dd>
+          <dd class="url"></dd>
         </dl>
       </li>
-      <li>
+      <li id="purchase">
         <dl>
           <dt>Date</dt>
           <dd class="date">7/23/2010</dd>
@@ -64,10 +105,10 @@
             <p>Merchandise $76.70 Sales Tax $8.52</p>
           </dd>
           <dt>Estimate URL</dt>
-          <dd class="url">http://carbon.brighterplanet.com/purchases.txt?date=2010-07-23&amp;merchant[name]=Staples&amp;merchant_category[mcc]=5111&amp;purchase_amount=85.22&amp;tax=7.75</dd>
+          <dd class="url"></dd>
         </dl>
       </li>
-      <li>
+      <li id="lodging">
         <dl>
           <dt>Date</dt>
           <dd class="date">7/27/2010</dd>
@@ -79,7 +120,7 @@
               <p>San Francisco Union Square 7-27-2010 To 7-29-2010</p>
           </dd>
           <dt>Estimate URL</dt>
-          <dd class="url">http://carbon.brighterplanet.com/lodgings.txt?lodging_class[name]=Hotel&amp;zip_code[name]=94102&amp;rooms=1&amp;nights=2</dd>
+          <dd class="url"></dd>
         </dl>
       </li>
     </ol>
@@ -100,36 +141,44 @@
 </div>
 
 <script type="text/javascript">
-var timer;
+  var timer;
 
-document.observe('dom:loaded', function() {
-  $$('.bill ol li').each(function(purchase) {
-    var url = purchase.down('dd.url').innerHTML.unescapeHTML();
-    var link = new Element('a', { 'href': url }).update('<span>Calculate </span>CO₂');
-    link.observe('click', function(ev) {
-      ev.stop();
-      showEstimate(purchase, link.getAttribute('href'));
-    })
-    purchase.insert({ 'top': link}); 
+  document.observe('dom:loaded', function() {
+    $$('.bill ol li').each(function(purchase) {
+      var link = new Element('a', { 'style': 'cursor: pointer;' }).update('<span>Calculate </span>CO<sub>2</sub>');
+      link.observe('click', function(ev) {
+        ev.stop();
+        var name = purchase.getAttribute('id');
+        CM1.impacts(name, Calculations[name], function(err, impacts) {
+          if(err && console)
+            consoloe.log('Failed to retrieve impacts for',name,err);
+          else
+            showEstimate(purchase, impacts);
+        });
+      })
+      purchase.insert({ 'top': link}); 
+    });
   });
-});
 
-function showEstimate(purchase, url) {
-  purchase.down('a').hide();
-  timer = new Date().getTime();
-  var iframe = new Element('iframe', { 'src': url, 'allowtransparency': 'true', 'style': 'background: transparent;', 'frameborder': '0', 'scrolling': 'no', 'onload': 'stopTimer(this);' });
-  purchase.insert({ 'top': iframe });
-  var methodology = new Element('p');
-  var methodologyLink = new Element('a', { 'href': url.gsub('.txt', '') }).update('Methodology');
-  var methodologySpan = new Element('span');
-  methodology.insert({ 'bottom': methodologySpan });
-  methodology.insert({ 'bottom': methodologyLink });
-  purchase.insert({ 'top': methodology });
-}
+  function showEstimate(purchase, impacts) {
+    purchase.down('a').hide();
+    timer = new Date().getTime();
 
-function stopTimer(iframe) {
-  var end = new Date().getTime();
-  var seconds = (end - timer) / 1000;
-  iframe.up('li').down('p span').update('Calculated remotely in ' + seconds + ' seconds. ');
-}
+    var pre = new Element('pre');
+    pre.appendChild(document.createTextNode(impacts.carbon));
+    purchase.insert({ 'top': pre });
+
+    var methodology = new Element('p');
+    var methodologyLink = new Element('a', { 'href': impacts.methodology }).update('Methodology');
+    var methodologySpan = new Element('span');
+    methodology.insert({ 'bottom': methodologySpan });
+    methodology.insert({ 'bottom': methodologyLink });
+    purchase.insert({ 'top': methodology });
+  }
+
+  function stopTimer(iframe) {
+    var end = new Date().getTime();
+    var seconds = (end - timer) / 1000;
+    iframe.up('li').down('p span').update('Calculated remotely in ' + seconds + ' seconds. ');
+  }
 </script>
